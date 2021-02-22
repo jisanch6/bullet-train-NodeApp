@@ -1,0 +1,38 @@
+[
+  {
+    "startLocation": {
+      "description": "Houston, Texas",
+      "address": "11332 Hillside, Houston, Texas 77022"
+    },
+    "endLocation": {
+      "description": "Dallas, Texas",
+      "address": "00222 Plain, Dallas, Texas 88022"
+    },
+    "ratingsAverage": 4.8,
+    "ratingsQuantity": 6,
+    "images": [],
+    "imageCover": "null",
+    "name": "To Austin",
+    "price": 89.99,
+    "summary": "The Lone Star State's third-largest city is a sprawling metroplex, boasting a rich history, signature snacks, and internationally-recognized architecture.",
+    "description": "In Dallas, Texas you can find...Irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+  },
+  {
+    "startLocation": {
+      "description": "Dallas, Texas",
+      "address": "00222 Plain, Dallas, Texas 88022"
+    },
+    "endLocation": {
+      "description": "Houston, Texas",
+      "address": "11332 Hillside, Houston, Texas 77022"
+    },
+    "ratingsAverage": 4.6,
+    "ratingsQuantity": 13,
+    "images": [],
+    "imageCover": "null",
+    "name": "To Austin",
+    "price": 99.99,
+    "summary": "Houston is known as the world capital of space exploration, the world capital of air conditioning, the world capital of the international energy industry, the world capital of petroleum exploration and the world capital of capital punishment.",
+    "description": "In Houston, Texas you can find...Irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
+  }
+]
