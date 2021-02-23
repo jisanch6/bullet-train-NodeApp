@@ -6,6 +6,7 @@ const depatureSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A departure must have a name'],
     unique: true,
+    trim: true,
     maxLength: [
       50,
       'A departure name must have less or equal to 50 characters',
@@ -48,6 +49,10 @@ const depatureSchema = new mongoose.Schema({
   endLocation: {
     description: String,
     address: String,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
   },
 });
 
