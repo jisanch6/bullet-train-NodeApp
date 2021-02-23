@@ -31,6 +31,7 @@
   "dependencies": {
     "express": "^4.17.1",
     "mongoose": "^5.11.17",
+    "morgan": "^1.10.0",
     "slugify": "^1.4.7"
   }
 }
