@@ -12,6 +12,8 @@ if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
 }
 
+app.use(express.json({ limit: '10kb' }));
+
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
