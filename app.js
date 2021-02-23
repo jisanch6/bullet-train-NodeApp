@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require('express');
 const morgan = require('morgan');
 
@@ -8,6 +9,7 @@ const app = express();
 
 //MIDDLEWARE
 app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
   console.log('Hello from the middleware');
