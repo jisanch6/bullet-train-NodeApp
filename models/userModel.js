@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -34,6 +35,18 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+});
+
+// Encrypts data between the time when data is received and is persisted to the db
+userSchema.pre('save', async function (next) {
+  //only runs when pass is actually modified
+  if (!this.isModified('password')) return next();
+
+  //hash pass with cost of 12
+  this.password = await bcrypt.hash(this.password, 12);
+
+  //delete passwordConfirm field
+  this.passwordConfirm = undefined;
 });
 
 const User = mongoose.model('User', userSchema);
