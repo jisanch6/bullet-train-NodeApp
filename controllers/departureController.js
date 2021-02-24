@@ -2,9 +2,29 @@ const Departure = require('../models/departureModel');
 
 exports.getAllDepartures = async (req, res) => {
   try {
-    const departures = await Departure.find();
+    // FILTERING
+    const queryObj = { ...req.query };
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
 
-    return res.status(200).json({
+    excludedFields.forEach((el) => delete queryObj[el]);
+
+    // ADVANCED FILTERING
+    let queryStr = JSON.stringify(queryObj);
+    //regular expression
+    queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`);
+    // console.log(JSON.parse(queryStr));
+
+    let query = Departure.find(JSON.parse(queryStr));
+
+    //SORTING
+    if (req.query.sort) {
+      query = query.sort(req.query.sort);
+    }
+
+    //EXECUTE QUERY
+    const departures = await query;
+
+    res.status(200).json({
       status: 'success',
       results: departures.length,
       data: {
@@ -12,7 +32,7 @@ exports.getAllDepartures = async (req, res) => {
       },
     });
   } catch (err) {
-    return res.status(404).json({
+    res.status(404).json({
       status: 'fail',
       message: err,
     });
@@ -41,14 +61,14 @@ exports.getDeparture = async (req, res) => {
   try {
     const departure = await Departure.findById(req.params.id);
 
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
       data: {
         departure,
       },
     });
   } catch (err) {
-    return res.status(404).json({
+    res.status(404).json({
       status: 'fail',
       message: err,
     });
@@ -66,14 +86,14 @@ exports.updateDeparture = async (req, res) => {
       }
     );
 
-    return res.status(200).json({
+    res.status(200).json({
       status: 'success',
       data: {
         departure,
       },
     });
   } catch (err) {
-    return res.status(404).json({
+    res.status(404).json({
       status: 'fail',
       message: err,
     });
@@ -84,12 +104,12 @@ exports.deleteDeparture = async (req, res) => {
   try {
     await Departure.findByIdAndDelete(req.params.id);
 
-    return res.status(204).json({
+    res.status(204).json({
       status: 'success',
       data: null,
     });
   } catch (err) {
-    return res.status(404).json({
+    res.status(404).json({
       status: 'fail',
       message: err,
     });
