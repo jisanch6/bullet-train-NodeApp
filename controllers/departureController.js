@@ -1,6 +1,7 @@
 const Departure = require('../models/departureModel');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getAllDepartures = catchAsync(async (req, res, next) => {
   //EXECUTE QUERY
@@ -34,6 +35,10 @@ exports.createDeparture = catchAsync(async (req, res, next) => {
 exports.getDeparture = catchAsync(async (req, res, next) => {
   const departure = await Departure.findById(req.params.id);
 
+  if (!departure) {
+    return next(new AppError('No departure found with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -48,6 +53,10 @@ exports.updateDeparture = catchAsync(async (req, res, next) => {
     runValidators: true,
   });
 
+  if (!departure) {
+    return next(new AppError('No departure found with that ID', 404));
+  }
+
   res.status(200).json({
     status: 'success',
     data: {
@@ -57,7 +66,11 @@ exports.updateDeparture = catchAsync(async (req, res, next) => {
 });
 
 exports.deleteDeparture = catchAsync(async (req, res, next) => {
-  await Departure.findByIdAndDelete(req.params.id);
+  const departure = await Departure.findByIdAndDelete(req.params.id);
+
+  if (!departure) {
+    return next(new AppError('No departure found with that ID', 404));
+  }
 
   res.status(204).json({
     status: 'success',
