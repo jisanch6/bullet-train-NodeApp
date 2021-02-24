@@ -1,13 +1,7 @@
 const Departure = require('../models/departureModel');
 const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
 
-//catch error here from function wrapped in catchAsync
-const catchAsync = (fn) =>
-  //retuns new anonymous function which assigned to function wrapped in catchAsync
-  (req, res, next) => {
-    //catch method passes error into next function which ends up in global error handling middleware.
-    fn(req, res, next).catch((err) => next(err));
-  };
 exports.getAllDepartures = catchAsync(async (req, res, next) => {
   //EXECUTE QUERY
   const features = new APIFeatures(Departure.find(), req.query)
@@ -26,7 +20,7 @@ exports.getAllDepartures = catchAsync(async (req, res, next) => {
   });
 });
 
-exports.createDeparture = catchAsync(async (req, res) => {
+exports.createDeparture = catchAsync(async (req, res, next) => {
   const newDeparture = await Departure.create(req.body);
 
   res.status(201).json({
@@ -37,7 +31,7 @@ exports.createDeparture = catchAsync(async (req, res) => {
   });
 });
 
-exports.getDeparture = catchAsync(async (req, res) => {
+exports.getDeparture = catchAsync(async (req, res, next) => {
   const departure = await Departure.findById(req.params.id);
 
   res.status(200).json({
@@ -48,7 +42,7 @@ exports.getDeparture = catchAsync(async (req, res) => {
   });
 });
 
-exports.updateDeparture = catchAsync(async (req, res) => {
+exports.updateDeparture = catchAsync(async (req, res, next) => {
   const departure = await Departure.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -62,7 +56,7 @@ exports.updateDeparture = catchAsync(async (req, res) => {
   });
 });
 
-exports.deleteDeparture = catchAsync(async (req, res) => {
+exports.deleteDeparture = catchAsync(async (req, res, next) => {
   await Departure.findByIdAndDelete(req.params.id);
 
   res.status(204).json({
