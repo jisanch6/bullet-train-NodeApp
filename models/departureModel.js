@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
-// const slugify = require('slugify');
+const slugify = require('slugify');
 
-const depatureSchema = new mongoose.Schema({
+const departureSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A departure must have a name'],
@@ -56,6 +56,11 @@ const depatureSchema = new mongoose.Schema({
   },
 });
 
-const Departure = mongoose.model('Departure', depatureSchema);
+// DOCUMENT MIDDLEWARE: runs before .save() and .create()
+departureSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+const Departure = mongoose.model('Departure', departureSchema);
 
 module.exports = Departure;
