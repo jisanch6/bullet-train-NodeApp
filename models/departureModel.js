@@ -8,7 +8,7 @@ const departureSchema = new mongoose.Schema({
     unique: true,
     trim: true,
     maxLength: [
-      50,
+      40,
       'A departure name must have less or equal to 50 characters',
     ],
     minLength: [
