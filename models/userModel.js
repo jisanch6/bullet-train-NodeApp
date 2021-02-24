@@ -24,6 +24,10 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please confirm your password'],
   },
   photo: String,
+  role: {
+    type: String,
+    default: 'user',
+  },
 });
 
 const User = mongoose.model('User', userSchema);
