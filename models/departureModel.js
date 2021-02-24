@@ -11,7 +11,10 @@ const departureSchema = new mongoose.Schema({
       50,
       'A departure name must have less or equal to 50 characters',
     ],
-    minLength: [5, 'A departure name must have less or equal to 5 characters'],
+    minLength: [
+      5,
+      'A departure name must have greater or equal to 5 characters',
+    ],
   },
   slug: String,
   ratingsAverage: {
@@ -50,6 +53,10 @@ const departureSchema = new mongoose.Schema({
     description: String,
     address: String,
   },
+  durationMinutes: {
+    type: Number,
+    default: 90,
+  },
   createdAt: {
     type: Date,
     default: Date.now(),
@@ -61,6 +68,7 @@ departureSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
   next();
 });
+
 const Departure = mongoose.model('Departure', departureSchema);
 
 module.exports = Departure;
