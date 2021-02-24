@@ -1,104 +1,72 @@
 const Departure = require('../models/departureModel');
 const APIFeatures = require('../utils/apiFeatures');
 
-exports.getAllDepartures = async (req, res) => {
-  try {
-    //EXECUTE QUERY
-    const features = new APIFeatures(Departure.find(), req.query)
-      .filter()
-      .sort()
-      .limitFields()
-      .paginate();
-    const departures = await features.query;
+//catch error here from function wrapped in catchAsync
+const catchAsync = (fn) =>
+  //retuns new anonymous function which assigned to function wrapped in catchAsync
+  (req, res, next) => {
+    //catch method passes error into next function which ends up in global error handling middleware.
+    fn(req, res, next).catch((err) => next(err));
+  };
+exports.getAllDepartures = catchAsync(async (req, res, next) => {
+  //EXECUTE QUERY
+  const features = new APIFeatures(Departure.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const departures = await features.query;
 
-    res.status(200).json({
-      status: 'success',
-      results: departures.length,
-      data: {
-        departures,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    results: departures.length,
+    data: {
+      departures,
+    },
+  });
+});
 
-exports.createDeparture = async (req, res) => {
-  try {
-    const newDeparture = await Departure.create(req.body);
+exports.createDeparture = catchAsync(async (req, res) => {
+  const newDeparture = await Departure.create(req.body);
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        departure: newDeparture,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(201).json({
+    status: 'success',
+    data: {
+      departure: newDeparture,
+    },
+  });
+});
 
-exports.getDeparture = async (req, res) => {
-  try {
-    const departure = await Departure.findById(req.params.id);
+exports.getDeparture = catchAsync(async (req, res) => {
+  const departure = await Departure.findById(req.params.id);
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        departure,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      departure,
+    },
+  });
+});
 
-exports.updateDeparture = async (req, res) => {
-  try {
-    const departure = await Departure.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+exports.updateDeparture = catchAsync(async (req, res) => {
+  const departure = await Departure.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
 
-    res.status(200).json({
-      status: 'success',
-      data: {
-        departure,
-      },
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(200).json({
+    status: 'success',
+    data: {
+      departure,
+    },
+  });
+});
 
-exports.deleteDeparture = async (req, res) => {
-  try {
-    await Departure.findByIdAndDelete(req.params.id);
+exports.deleteDeparture = catchAsync(async (req, res) => {
+  await Departure.findByIdAndDelete(req.params.id);
 
-    res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  } catch (err) {
-    res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});
