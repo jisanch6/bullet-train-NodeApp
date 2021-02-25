@@ -69,6 +69,13 @@ const departureSchema = new mongoose.Schema(
   }
 );
 
+//Virtual populate
+departureSchema.virtual('reviews', {
+  ref: 'Review',
+  foreignField: 'departure',
+  localField: '_id',
+});
+
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
 departureSchema.pre('save', function (next) {
   this.slug = slugify(this.name, { lower: true });
