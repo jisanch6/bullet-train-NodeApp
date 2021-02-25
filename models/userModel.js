@@ -26,6 +26,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please confirm your password'],
     validate: {
+      // Only works on CREATE & SAVE
       validator: function (el) {
         return el === this.password;
       },
@@ -43,6 +44,7 @@ const userSchema = new mongoose.Schema({
   passwordResetExpires: Date,
 });
 
+///// MIDDLEWARE
 // Encrypts data between the time when data is received and is persisted to the db
 userSchema.pre('save', async function (next) {
   //only runs when pass is actually modified
@@ -55,6 +57,14 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
 });
 
+userSchema.pre('save', function (next) {
+  if (!this.isModified('password') || this.isNew) return next();
+
+  this.passwordChangedAt = Date.now() - 1000;
+  next();
+});
+
+////// INSTANCE METHODS
 //Instance method to return true if passwords are the same
 userSchema.methods.correctPassword = async function (
   candidatePassword,
