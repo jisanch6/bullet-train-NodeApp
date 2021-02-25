@@ -71,19 +71,20 @@ exports.protect = catchAsync(async (req, res, next) => {
   // VERIFICATION of token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
   // CHECK if user still exists
-  const freshUser = await User.findById(decoded.id);
-  if (!freshUser) {
+  const currentUser = await User.findById(decoded.id);
+  if (!currentUser) {
     return next(
       new AppError('The user beloging to this toke no longer exists.', 401)
     );
   }
   // CHECK if user changed password after token was issued
-  if (freshUser.changedPasswordAfter(decoded.iat)) {
+  if (currentUser.changedPasswordAfter(decoded.iat)) {
     return next(
       new AppError('User recently changed password! Please log in again.', 401)
     );
   }
 
   //IF all requirements above are met, it grant access to protected route
+  req.user = currentUser;
   next();
 });
