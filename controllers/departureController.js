@@ -33,7 +33,7 @@ exports.createDeparture = catchAsync(async (req, res, next) => {
 });
 
 exports.getDeparture = catchAsync(async (req, res, next) => {
-  const departure = await Departure.findById(req.params.id);
+  const departure = await Departure.findById(req.params.id).populate('reviews');
 
   if (!departure) {
     return next(new AppError('No departure found with that ID', 404));

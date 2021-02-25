@@ -1,8 +1,11 @@
 const express = require('express');
 const departureController = require('../controllers/departureController');
 const authController = require('../controllers/authController');
+const reviewRouter = require('./reviewRoutes');
 
 const router = express.Router();
+
+router.use('/:departureId/reviews', reviewRouter);
 
 router
   .route('/')
@@ -25,5 +28,13 @@ router
     authController.restrictTo('admin', 'train-operator'),
     departureController.deleteDeparture
   );
+
+// router
+//   .route('/:departureId/reviews')
+//   .post(
+//     authController.protect,
+//     authController.restrictTo('user'),
+//     reviewController.createReview
+//   );
 
 module.exports = router;
