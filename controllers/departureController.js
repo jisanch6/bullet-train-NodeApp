@@ -1,97 +1,79 @@
 const Departure = require('../models/departureModel');
+const APIFeatures = require('../utils/apiFeatures');
+const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
-exports.getAllDepartures = async (req, res) => {
-  try {
-    const departures = await Departure.find();
+exports.getAllDepartures = catchAsync(async (req, res, next) => {
+  //EXECUTE QUERY
+  const features = new APIFeatures(Departure.find(), req.query)
+    .filter()
+    .sort()
+    .limitFields()
+    .paginate();
+  const departures = await features.query;
 
-    return res.status(200).json({
-      status: 'success',
-      results: departures.length,
-      data: {
-        departures,
-      },
-    });
-  } catch (err) {
-    return res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
+  res.status(200).json({
+    status: 'success',
+    results: departures.length,
+    data: {
+      departures,
+    },
+  });
+});
+
+exports.createDeparture = catchAsync(async (req, res, next) => {
+  const newDeparture = await Departure.create(req.body);
+
+  res.status(201).json({
+    status: 'success',
+    data: {
+      departure: newDeparture,
+    },
+  });
+});
+
+exports.getDeparture = catchAsync(async (req, res, next) => {
+  const departure = await Departure.findById(req.params.id);
+
+  if (!departure) {
+    return next(new AppError('No departure found with that ID', 404));
   }
-};
 
-exports.createDeparture = async (req, res) => {
-  try {
-    const newDeparture = await Departure.create(req.body);
+  res.status(200).json({
+    status: 'success',
+    data: {
+      departure,
+    },
+  });
+});
 
-    res.status(201).json({
-      status: 'success',
-      data: {
-        departure: newDeparture,
-      },
-    });
-  } catch (err) {
-    res.status(400).json({
-      status: 'fail',
-      message: err,
-    });
+exports.updateDeparture = catchAsync(async (req, res, next) => {
+  const departure = await Departure.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+    runValidators: true,
+  });
+
+  if (!departure) {
+    return next(new AppError('No departure found with that ID', 404));
   }
-};
 
-exports.getDeparture = async (req, res) => {
-  try {
-    const departure = await Departure.findById(req.params.id);
+  res.status(200).json({
+    status: 'success',
+    data: {
+      departure,
+    },
+  });
+});
 
-    return res.status(200).json({
-      status: 'success',
-      data: {
-        departure,
-      },
-    });
-  } catch (err) {
-    return res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
+exports.deleteDeparture = catchAsync(async (req, res, next) => {
+  const departure = await Departure.findByIdAndDelete(req.params.id);
+
+  if (!departure) {
+    return next(new AppError('No departure found with that ID', 404));
   }
-};
 
-exports.updateDeparture = async (req, res) => {
-  try {
-    const departure = await Departure.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
-
-    return res.status(200).json({
-      status: 'success',
-      data: {
-        departure,
-      },
-    });
-  } catch (err) {
-    return res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
-
-exports.deleteDeparture = async (req, res) => {
-  try {
-    await Departure.findByIdAndDelete(req.params.id);
-
-    return res.status(204).json({
-      status: 'success',
-      data: null,
-    });
-  } catch (err) {
-    return res.status(404).json({
-      status: 'fail',
-      message: err,
-    });
-  }
-};
+  res.status(204).json({
+    status: 'success',
+    data: null,
+  });
+});

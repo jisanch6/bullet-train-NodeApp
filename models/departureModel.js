@@ -1,16 +1,20 @@
 const mongoose = require('mongoose');
-// const slugify = require('slugify');
+const slugify = require('slugify');
 
-const depatureSchema = new mongoose.Schema({
+const departureSchema = new mongoose.Schema({
   name: {
     type: String,
     required: [true, 'A departure must have a name'],
     unique: true,
+    trim: true,
     maxLength: [
-      50,
+      40,
       'A departure name must have less or equal to 50 characters',
     ],
-    minLength: [5, 'A departure name must have less or equal to 5 characters'],
+    minLength: [
+      5,
+      'A departure name must have greater or equal to 5 characters',
+    ],
   },
   slug: String,
   ratingsAverage: {
@@ -49,8 +53,22 @@ const depatureSchema = new mongoose.Schema({
     description: String,
     address: String,
   },
+  durationMinutes: {
+    type: Number,
+    default: 90,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now(),
+  },
 });
 
-const Departure = mongoose.model('Departure', depatureSchema);
+// DOCUMENT MIDDLEWARE: runs before .save() and .create()
+departureSchema.pre('save', function (next) {
+  this.slug = slugify(this.name, { lower: true });
+  next();
+});
+
+const Departure = mongoose.model('Departure', departureSchema);
 
 module.exports = Departure;
