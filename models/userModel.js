@@ -36,6 +36,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     default: 'user',
   },
+  passwordChangedAt: Date,
 });
 
 // Encrypts data between the time when data is received and is persisted to the db
@@ -56,6 +57,19 @@ userSchema.methods.correctPassword = async function (
   userPassword
 ) {
   return await bcrypt.compare(candidatePassword, userPassword);
+};
+
+userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    //Changing passwordChangedAt date to milliseconds
+    const changedTimestamp = parseInt(
+      this.passwordChangedAt.getTime() / 1000,
+      10
+    );
+
+    return JWTTimestamp < changedTimestamp;
+  }
+  return false;
 };
 
 const User = mongoose.model('User', userSchema);
