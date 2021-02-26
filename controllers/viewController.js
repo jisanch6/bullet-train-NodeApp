@@ -10,8 +10,16 @@ exports.getOverview = catchAsync(async (req, res) => {
   });
 });
 
-exports.getDeparture = (req, res) => {
+exports.getDeparture = catchAsync(async (req, res) => {
+  const departure = await Departure.findOne({ slug: req.params.slug }).populate(
+    {
+      path: 'reviews',
+      fields: 'review rating user',
+    }
+  );
+
   res.status(200).render('departure', {
     title: 'To Houston',
+    departure,
   });
-};
+});
