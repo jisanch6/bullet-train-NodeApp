@@ -12,6 +12,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const departureRouter = require('./routes/departureRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
@@ -63,24 +64,7 @@ app.use((req, res, next) => {
 });
 
 /////ROUTES
-app.get('/', (req, res) => {
-  res.status(200).render('base', {
-    title: 'Speed',
-  });
-});
-
-app.get('/overview', (req, res) => {
-  res.status(200).render('overview', {
-    title: 'All Departures',
-  });
-});
-
-app.get('/departure', (req, res) => {
-  res.status(200).render('departure', {
-    title: 'To Houston',
-  });
-});
-
+app.use('/', viewRouter);
 app.use('/api/v1/departures', departureRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
