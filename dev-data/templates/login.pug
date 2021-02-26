@@ -1,0 +1,38 @@
+ header.header
+    nav.btn.nav.nav--trips
+      a.nav__link(href='/index.html') All departures
+    .header__logo-box
+      img.header__logo(src='img/logo-white.png' alt='Logo')
+    nav.nav.nav--user
+      a.nav__link.nav__link--logIn(href='/login.html') Log in
+      a.nav__link.nav__link--signUp(href='/signUp.html') Sign up
+      //
+        <img src="img/christopher-campbell-rDEOVtE7vOs-unsplash.jpg" alt="User photo" class="nav__user-photo">
+        <span>Jorge</span>
+  main.main
+    .form-box.login-form
+      h2.login-form__heading.form__heading
+        | Log into your account
+      form.form.form--login(action='')
+        .form__group
+          label.form__label(for='email')  Email Address
+          input#email.form__input(type='email' ,='' placeholder='you@example.com' required='')
+        .form__group
+          label.form__label(for='password') Password
+          input#password.form__input(type='password' ,='' placeholder='••••••••' required,='' minlength='8')
+        .form__group.form__group--forgotPass
+          button.btn.btn--logIn Login
+          a.form__link(href='/forgotPassword.html') Forgot password?
+  footer.footer
+    .footer__logo
+      img.footer__logo-img(src='/img/logo-primary-color.png' alt='My logo')
+    ul.footer__nav
+      li
+        a(href='#') About us
+      li
+        a(href='#') Download app
+      li
+        a(href='#') Careers
+      li
+        a(href='#') Contact
+    p.footer__copyright  &copy; by Jorge Sanchez. All rights reserved
