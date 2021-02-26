@@ -15,7 +15,10 @@ const reviewRouter = require('./routes/reviewRoutes');
 
 const app = express();
 
-//GLOBAL MIDDLEWARE
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+
+/////GLOBAL MIDDLEWARE
 
 // Sets special security HTTP headers
 // helps against XSS attacks
@@ -55,11 +58,15 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  console.log('Hello from the middleware');
+  console.log('Hello from the global middleware');
   next();
 });
 
-//ROUTES
+/////ROUTES
+app.get('/', (req, res) => {
+  res.status(200).render('base');
+});
+
 app.use('/api/v1/departures', departureRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
