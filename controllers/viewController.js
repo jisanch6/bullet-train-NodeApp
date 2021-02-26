@@ -19,7 +19,7 @@ exports.getDeparture = catchAsync(async (req, res) => {
   );
 
   res.status(200).render('departure', {
-    title: 'To Houston',
+    title: `${departure.name}`,
     departure,
   });
 });
