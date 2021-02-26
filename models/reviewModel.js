@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Departure = require('./departureModel');
 
 const reviewSchema = new mongoose.Schema(
   {
@@ -47,6 +48,48 @@ reviewSchema.pre(/^find/, function (next) {
   });
 
   next();
+});
+
+reviewSchema.statics.calcAvgRatings = async function (departureId) {
+  //this points to model
+  const stats = await this.aggregate([
+    {
+      $match: { departure: departureId },
+    },
+    {
+      $group: {
+        _id: '$departure',
+        nRating: { $sum: 1 },
+        avgRating: { $avg: '$rating' },
+      },
+    },
+  ]);
+  // console.log(stats);
+  if (stats.length > 0) {
+    await Departure.findByIdAndUpdate(departureId, {
+      ratingsQuantity: stats[0].nRating,
+      ratingsAverage: stats[0].avgRating,
+    });
+  } else {
+    await Departure.findByIdAndUpdate(departureId, {
+      ratingsQuantity: 0,
+      ratingsAverage: 1,
+    });
+  }
+};
+
+reviewSchema.post('save', function () {
+  //construct points to current model
+  this.constructor.calcAvgRatings(this.departure);
+});
+
+reviewSchema.pre(/^findOneAnd/, async function (next) {
+  this.review = await this.findOne();
+  next();
+});
+
+reviewSchema.post(/^findOneAnd/, async function () {
+  await this.review.constructor.calcAvgRatings(this.review.departure);
 });
 
 const Review = mongoose.model('Review', reviewSchema);
