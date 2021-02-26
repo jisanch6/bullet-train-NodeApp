@@ -64,7 +64,21 @@ app.use((req, res, next) => {
 
 /////ROUTES
 app.get('/', (req, res) => {
-  res.status(200).render('base');
+  res.status(200).render('base', {
+    title: 'Speed',
+  });
+});
+
+app.get('/overview', (req, res) => {
+  res.status(200).render('overview', {
+    title: 'All Departures',
+  });
+});
+
+app.get('/departure', (req, res) => {
+  res.status(200).render('departure', {
+    title: 'To Houston',
+  });
 });
 
 app.use('/api/v1/departures', departureRouter);
