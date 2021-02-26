@@ -42,7 +42,7 @@ block content
           .card__header
             .card__img
               .card__img-overlay  &nbsp;
-              img.card__img-picture(src=`img/departures/${departure.imageCover}` alt=`${departure.name}`)
+              img.card__img-picture(src=`/img/departures/${departure.imageCover}` alt=`${departure.name}`)
             h3.heading-tertiary.card__main-heading
               span= departure.name
           .card__details
@@ -50,11 +50,11 @@ block content
             p.card__text= departure.summary
             .card__data
               svg.card__icon
-                use(xlink:href='img/sprite.svg#icon-location')
+                use(xlink:href='/img/sprite.svg#icon-location')
               span= departure.startLocation.description
             .card__data
               svg.card__icon
-                use(xlink:href='img/sprite.svg#icon-flag')
+                use(xlink:href='/img/sprite.svg#icon-flag')
               span= departure.endLocation.description
           .card__footer
             p
@@ -65,4 +65,4 @@ block content
               span.card__footer-value= `${departure.ratingsAverage}`
               |  
               span.card__footer-text= `rating ${departure.ratingsQuantity}`
-            a.btn.btn--details(href=`/departures/${departure.slug}`) Details    
+            a.btn.btn--details(href=`/departure/${departure.slug}`) Details    
