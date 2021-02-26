@@ -59,6 +59,10 @@ const departureSchema = new mongoose.Schema(
       type: Number,
       default: 90,
     },
+    luggage: {
+      type: Number,
+      default: 1,
+    },
     createdAt: {
       type: Date,
       default: Date.now(),
