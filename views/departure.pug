@@ -1,4 +1,67 @@
 extends base
 
 block content
-  h1 Hello from departure
+  section.section-header
+    .header__hero 
+      .header__hero-overlay &nbsp;
+      img.header__hero-img(src='/img/departures/' alt='na')
+    .heading-box
+      h1.heading-primary.departure-heading
+        span `Heading `
+      a.btn.btn--bookNow(href='#') Book Now
+  section.section-information
+    .info-box
+      .info-box__group
+        h2.heading-secondary.info-box__heading Quick Information
+        .info-box__detail
+          svg.info-box__icon
+            use(xlink:href='img/sprite.svg#icon-location-pin')
+          span.info-box__label Terminal Location: 
+          span.info-box__text Dallas, Texas
+        .info-box__detail
+          svg.info-box__icon
+            use(xlink:href='img/sprite.svg#icon-menu')
+          span.info-box__label Carry on: 
+          span.info-box__text 1 per person
+        .info-box__detail
+          svg.info-box__icon
+            use(xlink:href='img/sprite.svg#icon-clock')
+          span.info-box__label Duration of ride: 
+          span.info-box__text 90 minutes
+        .info-box__detail
+          svg.info-box__icon
+            use(xlink:href='img/sprite.svg#icon-star-empty')
+          span.info-box__label Our riders rating: 
+          span.info-box__text  4.8/5
+      .info-box__description
+        h2.heading-secondary.info-box__heading
+          | Places to visit in Houston
+        p.info-box__description-text
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Porta nibh venenatis cras sed felis. Venenatis a condimentum vitae sapien. A lacus vestibulum sed arcu. Aliquam ut porttitor leo a. Arcu bibendum at varius vel pharetra vel turpis nunc eget. Potenti nullam ac tortor vitae purus. Vestibulum morbi blandit cursus risus at. Interdum velit euismod in pellentesque. Praesent elementum facilisis leo vel fringilla est. Urna cursus eget nunc scelerisque viverra. Blandit volutpat maecenas volutpat blandit aliquam. Et egestas quis ipsum suspendisse ultrices gravida dictum. Purus sit amet volutpat consequat mauris nunc congue nisi. Nibh tortor id aliquet lectus proin nibh nisl condimentum id. Vitae nunc sed velit dignissim sodales ut eu. Sollicitudin nibh sit amet commodo nulla facilisi nullam vehicula ipsum.
+  section.section-gallery
+    .gallery
+      .gallery__box
+        img.gallery__img.gallery__img--1(src='/img/bullet-train-terminal-2.jpg' alt='photo')
+      .gallery__box
+        img.gallery__img.gallery__img--1(src='/img/bullet-train-terminal-2.jpg' alt='photo')
+      .gallery__box
+        img.gallery__img.gallery__img--1(src='/img/bullet-train-terminal-2.jpg' alt='photo')
+  section.section-reviews
+    .reviews
+      .reviews__card
+        .reviews__avatar
+          img.reviews__avatar-img(src='/img/christopher-campbell-rDEOVtE7vOs-unsplash.jpg' alt='user photo')
+          h2.reviews__user Ellen Campbell
+        p.reviews__text
+          | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+        .reviews__rating
+          svg.reviews__star.reviews__star--active
+            use(xlink:href='img/sprite.svg#icon-star-empty')
+          svg.reviews__star.reviews__star--active
+            use(xlink:href='img/sprite.svg#icon-star-empty')
+          svg.reviews__star.reviews__star--active
+            use(xlink:href='img/sprite.svg#icon-star-empty')
+          svg.reviews__star.reviews__star--active
+            use(xlink:href='img/sprite.svg#icon-star-empty')
+          svg.reviews__star.reviews__star--inactive
+            use(xlink:href='img/sprite.svg#icon-star-empty')
