@@ -66,6 +66,27 @@ body {
   display: flex;
   flex-direction: column;
 }
+.alert {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 400;
+  text-align: center;
+  padding: 1.5rem 8rem;
+  box-shadow: 0 1rem 2rem rgba(0, 0, 0, 0.15);
+}
+
+.alert--success {
+  background-color: #01c701;
+}
+
+.alert--error {
+  background-color: #fd361c;
+}
 
 .container {
   max-width: 100%;
