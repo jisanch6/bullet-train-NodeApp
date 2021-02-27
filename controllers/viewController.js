@@ -1,7 +1,7 @@
 const Departure = require('../models/departureModel');
 const catchAsync = require('../utils/catchAsync');
 
-exports.getOverview = catchAsync(async (req, res) => {
+exports.getOverview = catchAsync(async (req, res, next) => {
   const departures = await Departure.find();
 
   res.status(200).render('overview', {
@@ -10,7 +10,7 @@ exports.getOverview = catchAsync(async (req, res) => {
   });
 });
 
-exports.getDeparture = catchAsync(async (req, res) => {
+exports.getDeparture = catchAsync(async (req, res, next) => {
   const departure = await Departure.findOne({ slug: req.params.slug }).populate(
     {
       path: 'reviews',
@@ -23,3 +23,20 @@ exports.getDeparture = catchAsync(async (req, res) => {
     departure,
   });
 });
+
+exports.getLoginForm = (req, res) => {
+  res.status(200).render('login', {
+    title: 'Log into your account',
+  });
+};
+
+exports.getSignupForm = (req, res) => {
+  res.status(200).render('signup', {
+    title: 'Create your account',
+  });
+};
+
+exports.getForgotPasswordForm = (req, res) =>
+  res.status(200).render('forgotPassword', {
+    title: 'Recover your account',
+  });
