@@ -144,7 +144,9 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const user = await User.findOne({ email: req.body.email });
 
   if (!user) {
-    return new AppError('There is no user with provided email address', 404);
+    return next(
+      new AppError('There is no user with provided email address', 404)
+    );
   }
   // GENERATE the random reset token
   const resetToken = user.createPasswordResetToken();
