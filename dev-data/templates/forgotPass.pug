@@ -1,0 +1,46 @@
+doctype html
+head
+  meta(charset='UTF-8')
+  meta(name='viewport' content='width=device-width, initial-scale=1.0')
+  link(rel='preconnect' href='https://fonts.gstatic.com')
+  link(href='https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap' rel='stylesheet')
+  link(rel='stylesheet' href='css/style.css')
+  link(rel='shortcut icon' type='image/png' href='img/favicon.ico')
+  title Forgot Password
+.container
+  header.header
+    nav.btn.nav.nav--trips
+      a.nav__link(href='/index.html') All departures
+    .header__logo-box
+      img.header__logo(src='img/logo-white.png' alt='Logo')
+    nav.nav.nav--user
+      a.nav__link.nav__link--logIn(href='/login.html') Log in
+      a.nav__link.nav__link--signUp(href='/signUp.html') Sign up
+      //
+        <img src="img/christopher-campbell-rDEOVtE7vOs-unsplash.jpg" alt="User photo" class="nav__user-photo">
+        <span>Jorge</span>
+  main.main
+    .form-box.forgotPass-form
+      h2.forgotPass-form__heading.form__heading
+        | Reset your password
+      p.forgotPass-form__text
+        | Enter your accounts email to receive password reset email
+      form.form.form--login(action='')
+        .form__group
+          label.form__label(for='email')  Email Address
+          input#email.form__input(type='email' ,='' placeholder='you@example.com' required='')
+        .form__group
+          button.btn.btn--blue Send password reset email
+  footer.footer
+    .footer__logo
+      img.footer__logo-img(src='/img/logo-primary-color.png' alt='My logo')
+    ul.footer__nav
+      li
+        a(href='#') About us
+      li
+        a(href='#') Download app
+      li
+        a(href='#') Careers
+      li
+        a(href='#') Contact
+    p.footer__copyright  &copy; by Jorge Sanchez. All rights reserved

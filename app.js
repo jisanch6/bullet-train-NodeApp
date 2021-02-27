@@ -6,20 +6,30 @@ const helmet = require('helmet');
 const mongoSanitize = require('express-mongo-sanitize');
 const xss = require('xss-clean');
 const hpp = require('hpp');
+const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
 const departureRouter = require('./routes/departureRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
 
-//GLOBAL MIDDLEWARE
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
 
+/////GLOBAL MIDDLEWARE
+app.use(cors());
 // Sets special security HTTP headers
 // helps against XSS attacks
-app.use(helmet());
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -37,6 +47,7 @@ app.use('/api', limiter);
 
 // Limiting amount of data passed in the body
 app.use(express.json({ limit: '10kb' }));
+app.use(cookieParser());
 
 // Data sanitization against NoSQL query injection like { "email": { "$gt": "" }}
 app.use(mongoSanitize());
@@ -55,11 +66,12 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  console.log('Hello from the middleware');
+  console.log('Hello from the global middleware');
   next();
 });
 
-//ROUTES
+/////ROUTES
+app.use('/', viewRouter);
 app.use('/api/v1/departures', departureRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);

@@ -23,6 +23,7 @@ const departureSchema = new mongoose.Schema(
       default: 1,
       min: [1, 'Rating must be above 1.0'],
       max: [5, 'Rating must be below 5.0'],
+      set: (val) => Math.round(val * 10) / 10,
     },
     ratingsQuantity: {
       type: Number,
@@ -57,6 +58,10 @@ const departureSchema = new mongoose.Schema(
     durationMinutes: {
       type: Number,
       default: 90,
+    },
+    luggage: {
+      type: Number,
+      default: 1,
     },
     createdAt: {
       type: Date,

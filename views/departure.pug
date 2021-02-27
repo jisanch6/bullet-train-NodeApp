@@ -1,0 +1,51 @@
+extends base
+
+mixin reviewCard(review)
+  .reviews__card
+    .reviews__avatar
+      img.reviews__avatar-img(src=`/img/users/${review.user.photo}` alt=`${review.user.name}`)
+      h2.reviews__user= review.user.name
+    p.reviews__text= review.review
+    .reviews__rating
+      each star in [1, 2, 3, 4, 5]
+        svg.reviews__star(class=`reviews__star--${review.rating >= star ? 'active' : 'inactive'}`)
+          use(xlink:href='/img/sprite.svg#icon-star-empty')
+
+mixin infoBox(label, text, icon)
+  .info-box__detail
+    svg.info-box__icon
+      use(xlink:href=`/img/sprite.svg#icon-${icon}`)
+    span.info-box__label= label
+    span.info-box__text= text
+
+block content
+  section.section-header
+    .header__hero 
+      .header__hero-overlay &nbsp;
+      img.header__hero-img(src=`/img/departures/${departure.imageCover}` alt=`${departure.name}`)
+    .heading-box
+      h1.heading-primary.departure-heading
+        span= `To ${departure.name}`
+      a.btn.btn--bookNow(href='#') Book Now
+  section.section-information
+    .info-box
+      .info-box__group
+        h2.heading-secondary.info-box__heading Quick Information
+
+        +infoBox('Terminal Location:', departure.startLocation.address, 'location-pin')
+        +infoBox('Carry On:', `${departure.luggage} per person`, 'menu')
+        +infoBox('Duration of ride:', `${departure.durationMinutes} minutes`, 'clock')
+        +infoBox('Our riders rating:', `${departure.ratingsAverage} / 5`, 'star-empty')
+
+      .info-box__description
+        h2.heading-secondary.info-box__heading= `Places to visit in ${departure.name}`
+        p.info-box__description-text= departure.description
+  section.section-gallery
+    .gallery
+      each img, i in departure.images
+        .gallery__box
+          img.gallery__img.gallery__img--1(src=`/img/departures/${img}` alt=`${departure.name} ${i + 1}`)
+  section.section-reviews
+    .reviews
+      each review in departure.reviews
+        +reviewCard(review) 
