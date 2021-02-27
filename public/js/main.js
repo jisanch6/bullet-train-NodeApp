@@ -16,6 +16,7 @@ const showAlert = (type, msg) => {
 
 const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
+const forgotPasswordForm = document.querySelector('.form--forgotPass');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -34,6 +35,14 @@ if (signupForm) {
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('passwordConfirm').value;
     signup(name, email, password, passwordConfirm);
+  });
+}
+
+if (forgotPasswordForm) {
+  forgotPasswordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = document.getElementById('email').value;
+    forgotPassword(email);
   });
 }
 
@@ -78,5 +87,26 @@ const signup = async (name, email, password, passwordConfirm) => {
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
+  }
+};
+
+const forgotPassword = async (email) => {
+  try {
+    const res = await axios({
+      method: 'POST',
+      url: 'api/v1/users/forgotPassword',
+      data: {
+        email,
+      },
+    });
+    if (res.data.status === 'success') {
+      showAlert('success', 'Reset email sent!');
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+    console.log(err.response.data.message);
   }
 };
