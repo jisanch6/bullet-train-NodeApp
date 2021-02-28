@@ -1,5 +1,6 @@
 const Departure = require('../models/departureModel');
 const catchAsync = require('../utils/catchAsync');
+const AppError = require('../utils/appError');
 
 exports.getOverview = catchAsync(async (req, res, next) => {
   const departures = await Departure.find();
@@ -17,6 +18,10 @@ exports.getDeparture = catchAsync(async (req, res, next) => {
       fields: 'review rating user',
     }
   );
+
+  if (!departure) {
+    return next(new AppError('No departure found with that name.', 404));
+  }
 
   res.status(200).render('departure', {
     title: `Departing to ${departure.name}`,
