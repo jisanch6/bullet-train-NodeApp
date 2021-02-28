@@ -355,6 +355,12 @@ h1 {
   text-align: center;
 }
 
+.error__msg {
+  font-size: 2.75rem;
+  font-weight: 700;
+  text-align: center;
+}
+
 .heading-secondary {
   font-size: 3.5rem;
   text-align: center;
@@ -364,6 +370,17 @@ h1 {
   letter-spacing: 0.1rem;
   padding-top: 6rem;
 }
+
+.heading-quaternary--error {
+  color: #fd361c;
+  font-size: 3.5rem;
+  text-align: center;
+  text-transform: uppercase;
+  word-spacing: 0.2rem;
+  letter-spacing: 0.1rem;
+  padding-top: 6rem;
+}
+
 .heading-secondary:after {
   display: block;
   height: 2px;
