@@ -25,39 +25,58 @@ const handleJTWExpired = () =>
 
 const sendErrorDev = (err, req, res) => {
   if (req.originalUrl.startsWith('/api')) {
-    res.status(err.statusCode).json({
+    return res.status(err.statusCode).json({
       status: err.status,
       error: err,
       message: err.message,
       stack: err.stack,
     });
-  } else {
-    res.status(err.statusCode).render('error', {
-      title: 'Something went wrong!',
-      msg: err.message,
-    });
   }
+
+  console.log('ERROR', err);
+
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    msg: err.message,
+  });
 };
 
 const sendErrorProd = (err, req, res) => {
-  //Operational, errors that are trusted: send message to client
-  if (err.isOperational) {
-    res.status(err.statusCode).json({
-      status: err.status,
-      message: err.message,
-    });
-
+  if (req.originalUrl.startsWith('/api')) {
+    //Operational, errors that are trusted: send message to client
+    if (err.isOperational) {
+      return res.status(err.statusCode).json({
+        status: err.status,
+        message: err.message,
+      });
+    }
     //Unknown programming or other errors: do not leak information
-  } else {
     //logging error
     console.log('ERROR', err);
 
     //sending generic err message
-    res.status(500).json({
+    return res.status(500).json({
       status: 'error',
       message: 'Something went very wrong',
     });
   }
+
+  if (err.isOperational) {
+    return res.status(err.statusCode).render('error', {
+      title: 'Something went wrong!',
+      msg: err.message,
+    });
+
+    //Unknown programming or other errors: do not leak information
+  }
+  //logging error
+  console.log('ERROR', err);
+
+  //sending generic err message
+  return res.status(err.statusCode).render('error', {
+    title: 'Something went wrong!',
+    msg: 'Please try again later.',
+  });
 };
 
 module.exports = (err, req, res, next) => {
