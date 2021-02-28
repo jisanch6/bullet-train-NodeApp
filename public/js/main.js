@@ -17,6 +17,7 @@ const showAlert = (type, msg) => {
 const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
 const forgotPasswordForm = document.querySelector('.form--forgotPass');
+const logOutBtn = document.querySelector('.nav__link--logout');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -24,6 +25,13 @@ if (loginForm) {
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     login(email, password);
+  });
+}
+
+if (logOutBtn) {
+  logOutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    logout();
   });
 }
 
@@ -67,6 +75,23 @@ const login = async (email, password) => {
   }
 };
 
+const logout = async () => {
+  try {
+    const res = await axios({
+      method: 'GET',
+      url: '/api/v1/users/logout',
+    });
+
+    if ((res.data.status = 'success')) {
+      window.setTimeout(() => {
+        location.assign('/');
+      }, 1500);
+    }
+  } catch (err) {
+    showAlert('error', 'Error logging out! Try again.');
+  }
+};
+
 const signup = async (name, email, password, passwordConfirm) => {
   try {
     const res = await axios({
@@ -101,9 +126,6 @@ const forgotPassword = async (email) => {
     });
     if (res.data.status === 'success') {
       showAlert('success', 'Reset email sent!');
-      window.setTimeout(() => {
-        location.assign('/');
-      }, 1500);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);

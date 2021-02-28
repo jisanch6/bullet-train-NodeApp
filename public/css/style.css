@@ -247,15 +247,14 @@ body {
   display: flex;
   align-items: center;
 }
-
-.nav__link--logIn {
-  padding-right: 2rem;
+.nav__link--logout {
+  margin-right: 2rem;
 }
-
 .nav__link--signUp {
   border: 2px solid var(--color-grey-light-4);
   padding: 0.5rem 1rem;
   border-radius: 100px;
+  margin-left: 2rem;
 }
 .nav__link--signUp:hover {
   border: 2px solid var(--color-grey-dark-4);
