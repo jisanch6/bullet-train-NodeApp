@@ -18,6 +18,8 @@ const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
 const forgotPasswordForm = document.querySelector('.form--forgotPass');
 const logOutBtn = document.querySelector('.nav__link--logout');
+const userDataForm = document.querySelector('.form--user-data');
+const userPasswordForm = document.querySelector('.form--user-password');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -51,6 +53,26 @@ if (forgotPasswordForm) {
     e.preventDefault();
     const email = document.getElementById('email').value;
     forgotPassword(email);
+  });
+}
+
+if (userDataForm) {
+  userDataForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const name = document.getElementById('name').value;
+    const email = document.getElementById('email').value;
+    const photo = document.getElementById('photo').value;
+    updateMe(name, email, photo);
+  });
+}
+
+if (userPasswordForm) {
+  userPasswordForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const passwordCurrent = document.getElementById('passwordCurrent').value;
+    const password = document.getElementById('password').value;
+    const passwordConfirm = document.getElementById('passwordConfirm').value;
+    updateMyPassword(passwordCurrent, password, passwordConfirm);
   });
 }
 
@@ -126,6 +148,48 @@ const forgotPassword = async (email) => {
     });
     if (res.data.status === 'success') {
       showAlert('success', 'Reset email sent!');
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+    console.log(err.response.data.message);
+  }
+};
+
+const updateMe = async (name, email, photo) => {
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: 'api/v1/users/updateMe',
+      data: {
+        name,
+        email,
+        photo,
+      },
+    });
+    if (res.data.status === 'success') {
+      showAlert('success', 'You have been updated!');
+      location.forcedReload(true);
+    }
+  } catch (err) {
+    showAlert('error', err.response.data.message);
+    console.log(err.response.data.message);
+  }
+};
+
+const updateMyPassword = async (passwordCurrent, password, passwordConfirm) => {
+  try {
+    const res = await axios({
+      method: 'PATCH',
+      url: 'api/v1/users/updateMyPassword',
+      data: {
+        passwordCurrent,
+        password,
+        passwordConfirm,
+      },
+    });
+    if (res.data.status === 'success') {
+      showAlert('success', 'Password has been updated!');
+      location.forcedReload(true);
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
