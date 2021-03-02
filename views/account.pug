@@ -1,18 +1,18 @@
 extends base
 
-mixin navItem(link, description, icon, active)
-    li(class=`${active ? 'side-nav--active': ''}`)
-        a(href=`${link}`)
-            svg 
+mixin navItem(link, description, icon)
+    li
+        a.nav__link(href=`${link}`)
+            svg.info-box__icon-menu
                 use(xlink:href=`/img/sprite.svg#icon-${icon}`)
-                | #{description}
+            span.side-nav__description #{description}
 
 block content
-    main.main 
+    main.main--account
         .user-account-box
             nav.user-account__menu 
                 ul.side-nav 
-                    +navItem('#', 'Settings', 'settings', true)
+                    +navItem('#', 'Settings', 'settings')
                     +navItem('#', 'My bookings', 'briefcase')
                     +navItem('#', 'My reviews', 'star-full')
                     +navItem('#', 'Billing', 'credit-card')
