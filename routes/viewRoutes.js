@@ -11,5 +11,6 @@ router.get('/forgotPassword', viewController.getForgotPasswordForm);
 router.get('/departure/:slug', viewController.getDeparture);
 router.get('/login', viewController.getLoginForm);
 router.get('/signup', viewController.getSignupForm);
+router.get('/account', viewController.getAccount);
 
 module.exports = router;

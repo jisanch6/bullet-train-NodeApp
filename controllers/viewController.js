@@ -45,3 +45,8 @@ exports.getForgotPasswordForm = (req, res) =>
   res.status(200).render('forgotPassword', {
     title: 'Recover your account',
   });
+
+exports.getAccount = (req, res) =>
+  res.status(200).render('account', {
+    title: 'Your account',
+  });
