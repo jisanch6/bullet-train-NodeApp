@@ -784,19 +784,25 @@ p {
 .info-box__icon-menu {
   height: 2.5rem;
   width: 2.5rem;
-  fill: var(--color-primary);
+  fill: #ffff;
   margin-right: 1.5rem;
 }
 
 .side-nav__description {
   font-size: 1.5rem;
   font-weight: 400;
+  color: #fff;
+}
+
+.side-nav__description:hover,
+.side-nav__description:active {
+  color: rgb(223, 223, 223);
 }
 
 .employee-nav_heading,
 .admin-nav_heading {
   font-size: 1.75rem;
-  color: var(--color-grey-light-4);
+  color: #ffff;
 }
 
 .user-account__forms {
