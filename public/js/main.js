@@ -67,12 +67,16 @@ if (userDataForm) {
 }
 
 if (userPasswordForm) {
-  userPasswordForm.addEventListener('submit', (e) => {
+  userPasswordForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const passwordCurrent = document.getElementById('passwordCurrent').value;
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('passwordConfirm').value;
-    updateMyPassword(passwordCurrent, password, passwordConfirm);
+    await updateMyPassword(passwordCurrent, password, passwordConfirm);
+
+    document.getElementById('passwordCurrent').value = '';
+    document.getElementById('password').value = '';
+    document.getElementById('passwordConfirm').value = '';
   });
 }
 
