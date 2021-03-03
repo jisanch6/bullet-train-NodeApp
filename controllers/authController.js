@@ -197,10 +197,8 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.setToken = async (req, res, next) => {
-  if (!req.body.token) {
-    req.params.token = req.body.token;
-    return next();
-  }
+  if (!req.body.token) req.params.token = req.body.token;
+
   next();
 };
 
