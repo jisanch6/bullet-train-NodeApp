@@ -66,9 +66,9 @@ app.use(
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((req, res, next) => {
-  if (res.locals.token) console.log(res.locals.token);
-  console.log(req.originalUrl);
-  console.log('Hello from the global middleware');
+  // if (res.locals.token) console.log(res.locals.token);
+  // console.log(req.originalUrl);
+  // console.log('Hello from the global middleware');
   next();
 });
 
