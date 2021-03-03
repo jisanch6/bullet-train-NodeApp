@@ -1,5 +1,8 @@
 extends base
 
+//- block append head 
+//-   script(src="https://js.stripe.com/v3/")
+
 mixin reviewCard(review)
   .reviews__card
     .reviews__avatar
@@ -26,7 +29,10 @@ block content
     .heading-box
       h1.heading-primary.departure-heading
         span= `To ${departure.name}`
-      a.btn.btn--bookNow(href='#') Book Now
+      if user
+        a.btn.btn--bookNow#book-departure(data-departure-id=`${departure.id}`) Book Now
+      else
+        a.btn.btn--bookNow(href='/login') Login to book a departure
   section.section-information
     .info-box
       .info-box__group
