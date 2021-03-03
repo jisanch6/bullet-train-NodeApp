@@ -50,3 +50,8 @@ exports.getAccount = (req, res) =>
   res.status(200).render('account', {
     title: 'Your account',
   });
+
+// exports.getResetPasswordForm = (req, res) =>
+//   res.status(200).render('resetPassword', {
+//     title: 'Reset your password',
+//   });

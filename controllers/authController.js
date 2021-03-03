@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { promisify } = require('util');
+// const pug = require('pug');
 const jwt = require('jsonwebtoken');
 const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
@@ -85,7 +86,7 @@ exports.protect = catchAsync(async (req, res, next) => {
 
   if (!token) {
     return next(
-      new AppError('You are not logged in!. Please log in to get access!', 401)
+      new AppError('You are not logged in! Please log in to get access!', 401)
     );
   }
   // VERIFICATION of token
@@ -196,6 +197,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
 });
 
 exports.resetPassword = catchAsync(async (req, res, next) => {
+  // pug.renderFile(`${__dirname}/../views/emails/passwordReset.pug`);
   // GET user based on the token
   const hashedToken = crypto
     .createHash('sha256')

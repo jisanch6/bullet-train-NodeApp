@@ -20,6 +20,7 @@ const forgotPasswordForm = document.querySelector('.form--forgotPass');
 const logOutBtn = document.querySelector('.nav__link--logout');
 const userDataForm = document.querySelector('.form--user-data');
 const userPasswordForm = document.querySelector('.form--user-password');
+// const passwordResetForm = document.querySelector('.form--resetPassword');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -81,6 +82,16 @@ if (userPasswordForm) {
     document.getElementById('passwordConfirm').value = '';
   });
 }
+
+// if (passwordResetForm) {
+//   passwordResetForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     console.log();
+//     const password = document.getElementById('password').value;
+//     const passwordConfirm = document.getElementById('passwordConfirm').value;
+//     resetPassword(password, passwordConfirm);
+//   });
+// }
 
 const login = async (email, password) => {
   try {
@@ -198,3 +209,23 @@ const updateMyPassword = async (passwordCurrent, password, passwordConfirm) => {
     console.log(err.response.data.message);
   }
 };
+
+// const resetPassword = async (password, passwordConfirm) => {
+//   try {
+//     const res = await axios({
+//       method: 'PATCH',
+//       url: 'api/v1/users/resetPassword/:token',
+//       data: {
+//         password,
+//         passwordConfirm,
+//       },
+//     });
+//     if (res.data.status === 'success') {
+//       showAlert('success', 'Password has been reset!');
+//       location.forcedReload(true);
+//     }
+//   } catch (err) {
+//     showAlert('error', err.response.data.message);
+//     console.log(err.response.data.message);
+//   }
+// };
