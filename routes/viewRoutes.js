@@ -4,7 +4,7 @@ const authController = require('../controllers/authController');
 
 const router = express.Router();
 
-// router.get('/users/resetPassword/:token', viewController.getResetPasswordForm);
+router.get('/users/resetPassword/:token', viewController.getResetPasswordForm);
 
 router.get('/account', authController.protect, viewController.getAccount);
 
