@@ -1,6 +1,9 @@
 /* eslint-disable */
 require('@babel/polyfill');
 const axios = require('axios');
+// const stripe = require('stripe')(
+//   'pk_test_51IJ9XaJhWumwQBaCJH6Gdzl98ZIQRKkHFaRdDo9cVb58YY6Rb1hswTOCAGZ2NLmn9ml9hZMFGtKQhvdObYEPqLKn00tuoT388a'
+// );
 
 const hideAlert = () => {
   const el = document.querySelector('.alert');
@@ -20,7 +23,8 @@ const forgotPasswordForm = document.querySelector('.form--forgotPass');
 const logOutBtn = document.querySelector('.nav__link--logout');
 const userDataForm = document.querySelector('.form--user-data');
 const userPasswordForm = document.querySelector('.form--user-password');
-const passwordResetForm = document.querySelector('.form--resetPassword');
+// const passwordResetForm = document.querySelector('.form--resetPassword');
+// const bookDepartureButton = document.getElementById('book-departure');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -83,16 +87,24 @@ if (userPasswordForm) {
   });
 }
 
-if (passwordResetForm) {
-  passwordResetForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    console.log(document.URL);
-    const token = document.URL.split('/')[5];
-    const password = document.getElementById('password').value;
-    const passwordConfirm = document.getElementById('passwordConfirm').value;
-    resetPassword(token, password, passwordConfirm);
-  });
-}
+// if (passwordResetForm) {
+//   passwordResetForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     console.log(document.URL);
+//     const token = document.URL.split('/')[5];
+//     const password = document.getElementById('password').value;
+//     const passwordConfirm = document.getElementById('passwordConfirm').value;
+//     resetPassword(token, password, passwordConfirm);
+//   });
+// }
+
+// if (bookDepartureButton) {
+//   bookDepartureButton.addEventListener('click', (e) => {
+//     e.target.textContent = 'Processing...';
+//     const { departureId } = e.target.dataset;
+//     bookDeparture(departureId);
+//   });
+// }
 
 const login = async (email, password) => {
   try {
@@ -211,23 +223,41 @@ const updateMyPassword = async (passwordCurrent, password, passwordConfirm) => {
   }
 };
 
-const resetPassword = async (token, password, passwordConfirm) => {
-  try {
-    const res = await axios({
-      method: 'PATCH',
-      url: 'api/v1/users/resetPassword/:token',
-      data: {
-        token,
-        password,
-        passwordConfirm,
-      },
-    });
-    if (res.data.status === 'success') {
-      showAlert('success', 'Password has been reset!');
-      location.forcedReload(true);
-    }
-  } catch (err) {
-    showAlert('error', err.response.data.message);
-    console.log(err.response.data.message);
-  }
-};
+// const resetPassword = async (token, password, passwordConfirm) => {
+//   try {
+//     const res = await axios({
+//       method: 'PATCH',
+//       url: 'api/v1/users/resetPassword/:token',
+//       data: {
+//         token,
+//         password,
+//         passwordConfirm,
+//       },
+//     });
+//     if (res.data.status === 'success') {
+//       showAlert('success', 'Password has been reset!');
+//       location.forcedReload(true);
+//     }
+//   } catch (err) {
+//     showAlert('error', err.response.data.message);
+//     console.log(err.response.data.message);
+//   }
+// };
+
+// const bookDeparture = async (departureId) => {
+//   try {
+//     //get checkout session id from API
+//     const session = await axios(
+//       `api/v1/bookings/checkout-session/${departureId}`
+//     );
+//     console.log(session);
+
+//     //create checkout form & charge card
+//     await stripe.redirectToCheckout({
+//       id,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     showAlert('error', err);
+//   }
+// };
