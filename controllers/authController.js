@@ -196,6 +196,14 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   }
 });
 
+exports.setToken = async (req, res, next) => {
+  if (!req.body.token) {
+    req.params.token = req.body.token;
+    return next();
+  }
+  next();
+};
+
 exports.resetPassword = catchAsync(async (req, res, next) => {
   // pug.renderFile(`${__dirname}/../views/emails/passwordReset.pug`);
   // GET user based on the token
