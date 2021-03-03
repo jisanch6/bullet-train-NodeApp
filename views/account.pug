@@ -1,0 +1,64 @@
+extends base
+
+mixin navItem(link, description, icon)
+    li
+        a.nav__link(href=`${link}`)
+            svg.info-box__icon-menu
+                use(xlink:href=`/img/sprite.svg#icon-${icon}`)
+            span.side-nav__description #{description}
+
+block content
+    main.main--account
+        .user-account-box
+            nav.user-account__menu 
+                ul.side-nav 
+                    +navItem('#', 'Settings', 'settings')
+                    +navItem('#', 'My bookings', 'briefcase')
+                    +navItem('#', 'My reviews', 'star-full')
+                    +navItem('#', 'Billing', 'credit-card')
+
+                - if (user.role === 'admin' || user.role === 'train-operator')
+                    .employee-nav 
+                        h5.employee-nav_heading Employees 
+                        ul.side-nav 
+                            +navItem('#', 'Manage departures', 'calendar')
+                            +navItem('#', 'Manage bookings', 'briefcase')
+                            +navItem('#', 'Manage reviews', 'star-full')
+                - if (user.role === 'admin')
+                    .admin-nav 
+                        h5.admin-nav_heading Admin 
+                        ul.side-nav 
+                            +navItem('#', 'Manage users', 'users')
+            
+            .user-account__forms 
+                .user-account__form-box
+                    h2.form__heading Your account information 
+
+                    form.form.form--user-data
+                        .form__group
+                            label.form__label(for='name')  Name
+                            input#name.form__input(type='text' , value=`${user.name}` required, name='name')
+                        .form__group
+                            label.form__label(for='email')  Email Address
+                            input#email.form__input(type='email' , value=`${user.email}` required, name='email')
+                        .form__group
+                            img.form__user-photo(src=`/img/users/${user.photo}`, alt='user photo')
+                            input.form__upload(type='file', accept='image/*', id='photo', name='photo') 
+                            label(for='photo') Upload photo
+                        button.btn.btn--logIn Save settings
+
+                .form-line &nbsp;
+
+                .user-account__form-box
+                    h2.form__heading Password Change
+                    form.form.form--user-password
+                        .form__group
+                            label.form__label(for='passwordCurrent') Current password
+                            input#passwordCurrent.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group
+                            label.form__label(for='password') New password
+                            input#password.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        .form__group
+                            label.form__label(for='passwordConfirm') Confirm password
+                            input#passwordConfirm.form__input(type='password', placeholder='••••••••', required, minlength='8')
+                        button.btn.btn--logIn Save password
