@@ -26,11 +26,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(cors());
 // Sets special security HTTP headers
 // helps against XSS attacks
-app.use(
-  helmet({
-    contentSecurityPolicy: false,
-  })
-);
+// app.use(
+//   helmet({
+//     contentSecurityPolicy: false,
+//   })
+// );
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
