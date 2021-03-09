@@ -174,7 +174,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   try {
     const resetURL = `${req.protocol}://${req.get(
       'host'
-    )}/users/resetPassword/${resetToken}`;
+    )}/api/v1/users/resetPassword/${resetToken}`;
 
     await new Email(user, resetURL).sendPasswordReset();
 
@@ -226,6 +226,29 @@ exports.resetPassword = catchAsync(async (req, res, next) => {
 
   // Log the user in, send JWT
   createSendToken(user, 200, res);
+});
+
+exports.passwordResetForm = catchAsync(async (req, res, next) => {
+  // pug.renderFile(`${__dirname}/../views/emails/passwordReset.pug`);
+  // GET user based on the token
+  const hashedToken = crypto
+    .createHash('sha256')
+    .update(req.params.token)
+    .digest('hex');
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  // if toke has not EXPIRED, & user exists, set the new password
+  if (!user) {
+    return next(new AppError('Token is invalid or has expired.', 400));
+  }
+
+  res.status(200).render('resetPassword', {
+    title: 'Reset your password',
+    token: req.params.token,
+  });
 });
 
 exports.updatePassword = catchAsync(async (req, res, next) => {
