@@ -4,6 +4,7 @@ import { login, logout } from './login.mjs';
 import { signup } from './signup.mjs';
 import { forgotPassword, resetPassword } from './forgotPass.mjs';
 import { updateMe, updateMyPassword } from './updateSettings.mjs';
+import { bookDeparture } from './stripe.mjs';
 
 const loginForm = document.querySelector('.form--login');
 const signupForm = document.querySelector('.form--signup');
@@ -12,6 +13,7 @@ const logOutBtn = document.querySelector('.nav__link--logout');
 const userDataForm = document.querySelector('.form--user-data');
 const userPasswordForm = document.querySelector('.form--user-password');
 const passwordResetForm = document.querySelector('.form--resetPassword');
+const bookBtn = document.getElementById('book-departure');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -83,5 +85,13 @@ if (passwordResetForm) {
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('passwordConfirm').value;
     resetPassword(token, password, passwordConfirm);
+  });
+}
+
+if (bookBtn) {
+  bookBtn.addEventListener('click', (e) => {
+    e.target.textContent = 'Processing...';
+    const { departureId } = e.target.dataset;
+    bookDeparture(departureId);
   });
 }
