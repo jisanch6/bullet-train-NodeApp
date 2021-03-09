@@ -1,6 +1,5 @@
 {
   "name": "bullet-train-nodeapp",
-  "type": "commonjs",
   "version": "1.0.0",
   "description": "API for bullet-train webpage",
   "engines": {
@@ -10,7 +9,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production& nodemon server.js",
-    "browserify:js": "browserify ./public/js/main.js > ./public/js/bundle.js"
+    "browserify:js": "browserify ./public/js/main.mjs > ./public/js/bundle.mjs",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -32,7 +32,9 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
