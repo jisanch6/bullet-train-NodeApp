@@ -65,6 +65,7 @@ app.use(
 
 //serves static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use((req, res, next) => {
   // if (res.locals.token) console.log(res.locals.token);
