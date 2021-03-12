@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/jisanch6/bullet-train-NodeApp#readme",
   "devDependencies": {
-    "browserify": "^17.0.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-node": "^4.1.0",
@@ -32,6 +31,7 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
+    "ndb": "^1.1.5",
     "prettier": "^2.2.1",
     "webpack": "^5.24.4",
     "webpack-cli": "^4.5.0"
