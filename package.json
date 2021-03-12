@@ -9,7 +9,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production& nodemon server.js",
-    "browserify:js": "browserify ./public/js/main.mjs > ./public/js/bundle.mjs",
+    "debug": "ndb server.js",
     "build": "webpack"
   },
   "repository": {
