@@ -9,7 +9,7 @@ const router = express.Router();
 //   .route('/resetPassword/:resetToken/users', userRouter)
 //   .patch(authController.resetPassword);
 
-// router.get('/users/resetPassword/:token', viewController.getResetPasswordForm);
+// router.get('/users/:token/resetPassword', viewController.getResetPasswordForm);
 
 router.get('/account', authController.protect, viewController.getAccount);
 
