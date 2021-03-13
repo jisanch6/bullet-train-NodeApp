@@ -20,13 +20,12 @@ export const forgotPassword = async (email) => {
   }
 };
 
-export const resetPassword = async (token, password, passwordConfirm) => {
+export const resetUserPassword = async (password, passwordConfirm) => {
   try {
     const res = await axios({
       method: 'PATCH',
-      url: 'api/v1/users/resetPassword/:token',
+      url: '',
       data: {
-        token,
         password,
         passwordConfirm,
       },
