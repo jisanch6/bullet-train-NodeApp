@@ -2,7 +2,7 @@
 import '@babel/polyfill';
 import { login, logout } from './login.mjs';
 import { signup } from './signup.mjs';
-import { forgotPassword, resetPassword } from './forgotPass.mjs';
+import { forgotPassword, resetUserPassword } from './forgotPass.mjs';
 import { updateMe, updateMyPassword } from './updateSettings.mjs';
 import { bookDeparture } from './stripe.mjs';
 
@@ -78,13 +78,9 @@ if (userPasswordForm) {
 
 if (passwordResetForm) {
   passwordResetForm.addEventListener('submit', (e) => {
-    e.preventDefault();
-    console.log(document.URL);
-    const token = document.URL.split('/')[5];
-    console.log(token);
     const password = document.getElementById('password').value;
     const passwordConfirm = document.getElementById('passwordConfirm').value;
-    resetPassword(token, password, passwordConfirm);
+    resetUserPassword(password, passwordConfirm);
   });
 }
 
