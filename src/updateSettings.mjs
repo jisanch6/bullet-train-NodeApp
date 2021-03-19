@@ -33,6 +33,9 @@ const updateMyPassword = async (passwordCurrent, password, passwordConfirm) => {
     if (res.data.status === 'success') {
       showAlert('success', 'Password has been updated!');
       location.forcedReload(true);
+      document.getElementById('passwordCurrent').value = '';
+      document.getElementById('password').value = '';
+      document.getElementById('passwordConfirm').value = '';
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
