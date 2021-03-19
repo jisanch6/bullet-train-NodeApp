@@ -1,6 +1,5 @@
 {
   "name": "bullet-train-nodeapp",
-  "type": "commonjs",
   "version": "1.0.0",
   "description": "API for bullet-train webpage",
   "engines": {
@@ -10,7 +9,8 @@
   "scripts": {
     "start": "nodemon server.js",
     "start:prod": "SET NODE_ENV=production& nodemon server.js",
-    "browserify:js": "browserify ./public/js/main.js > ./public/js/bundle.js"
+    "debug": "ndb server.js",
+    "build": "webpack"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,6 @@
   },
   "homepage": "https://github.com/jisanch6/bullet-train-NodeApp#readme",
   "devDependencies": {
-    "browserify": "^17.0.0",
     "eslint": "^7.20.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-node": "^4.1.0",
@@ -32,7 +31,10 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
-    "prettier": "^2.2.1"
+    "ndb": "^1.1.5",
+    "prettier": "^2.2.1",
+    "webpack": "^5.24.4",
+    "webpack-cli": "^4.5.0"
   },
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
@@ -41,11 +43,13 @@
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "express": "^4.17.1",
     "express-mongo-sanitize": "^2.0.2",
     "express-rate-limit": "^5.2.6",
     "helmet": "^4.4.1",
     "hpp": "^0.2.3",
+    "html-to-text": "^7.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
@@ -54,6 +58,7 @@
     "pug": "^3.0.0",
     "sharp": "^0.27.2",
     "slugify": "^1.4.7",
+    "stripe": "^8.137.0",
     "validator": "^13.5.2",
     "xss-clean": "^0.1.1"
   }

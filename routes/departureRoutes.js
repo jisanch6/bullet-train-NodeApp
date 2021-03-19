@@ -13,6 +13,8 @@ router
   .post(
     authController.protect,
     authController.restrictTo('admin', 'train-operator'),
+    departureController.uploadTourImages,
+    departureController.resizeTourImages,
     departureController.createDeparture
   );
 router
@@ -21,6 +23,8 @@ router
   .patch(
     authController.protect,
     authController.restrictTo('admin', 'train-operator'),
+    departureController.uploadTourImages,
+    departureController.resizeTourImages,
     departureController.updateDeparture
   )
   .delete(

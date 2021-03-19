@@ -1,4 +1,7 @@
+// const jwt = require('jsonwebtoken');
+// const crypto = require('crypto');
 const Departure = require('../models/departureModel');
+// const User = require('../models/userModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -50,3 +53,9 @@ exports.getAccount = (req, res) =>
   res.status(200).render('account', {
     title: 'Your account',
   });
+
+exports.getResetPasswordForm = (req, res) => {
+  res.status(200).render('resetPassword', {
+    title: 'Reset your password',
+  });
+};

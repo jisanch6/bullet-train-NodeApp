@@ -14,6 +14,7 @@ const globalErrorHandler = require('./controllers/errorController');
 const departureRouter = require('./routes/departureRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
+const bookingRouter = require('./routes/bookingRoutes');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
@@ -64,9 +65,12 @@ app.use(
 
 //serves static files
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'dist')));
 
 app.use((req, res, next) => {
-  console.log('Hello from the global middleware');
+  // if (res.locals.token) console.log(res.locals.token);
+  // console.log(req.originalUrl);
+  // console.log('Hello from the global middleware');
   next();
 });
 
@@ -75,6 +79,7 @@ app.use('/', viewRouter);
 app.use('/api/v1/departures', departureRouter);
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/reviews', reviewRouter);
+app.use('/api/v1/bookings', bookingRouter);
 
 app.all('*', (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 400));

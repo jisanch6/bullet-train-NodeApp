@@ -9001,6 +9001,9 @@ try {
 /* eslint-disable */
 require('@babel/polyfill');
 const axios = require('axios');
+// const stripe = require('stripe')(
+//   'pk_test_51IJ9XaJhWumwQBaCJH6Gdzl98ZIQRKkHFaRdDo9cVb58YY6Rb1hswTOCAGZ2NLmn9ml9hZMFGtKQhvdObYEPqLKn00tuoT388a'
+// );
 
 const hideAlert = () => {
   const el = document.querySelector('.alert');
@@ -9020,6 +9023,8 @@ const forgotPasswordForm = document.querySelector('.form--forgotPass');
 const logOutBtn = document.querySelector('.nav__link--logout');
 const userDataForm = document.querySelector('.form--user-data');
 const userPasswordForm = document.querySelector('.form--user-password');
+// const passwordResetForm = document.querySelector('.form--resetPassword');
+// const bookDepartureButton = document.getElementById('book-departure');
 
 if (loginForm) {
   loginForm.addEventListener('submit', (e) => {
@@ -9059,10 +9064,12 @@ if (forgotPasswordForm) {
 if (userDataForm) {
   userDataForm.addEventListener('submit', (e) => {
     e.preventDefault();
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const photo = document.getElementById('photo').value;
-    updateMe(name, email, photo);
+    const form = new FormData();
+
+    form.append('name', document.getElementById('name').value);
+    form.append('email', document.getElementById('email').value);
+    form.append('photo', document.getElementById('photo').files[0]);
+    updateMe(form);
   });
 }
 
@@ -9079,6 +9086,25 @@ if (userPasswordForm) {
     document.getElementById('passwordConfirm').value = '';
   });
 }
+
+// if (passwordResetForm) {
+//   passwordResetForm.addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     console.log(document.URL);
+//     const token = document.URL.split('/')[5];
+//     const password = document.getElementById('password').value;
+//     const passwordConfirm = document.getElementById('passwordConfirm').value;
+//     resetPassword(token, password, passwordConfirm);
+//   });
+// }
+
+// if (bookDepartureButton) {
+//   bookDepartureButton.addEventListener('click', (e) => {
+//     e.target.textContent = 'Processing...';
+//     const { departureId } = e.target.dataset;
+//     bookDeparture(departureId);
+//   });
+// }
 
 const login = async (email, password) => {
   try {
@@ -9159,16 +9185,12 @@ const forgotPassword = async (email) => {
   }
 };
 
-const updateMe = async (name, email, photo) => {
+const updateMe = async (data) => {
   try {
     const res = await axios({
       method: 'PATCH',
       url: 'api/v1/users/updateMe',
-      data: {
-        name,
-        email,
-        photo,
-      },
+      data,
     });
     if (res.data.status === 'success') {
       showAlert('success', 'You have been updated!');
@@ -9200,5 +9222,44 @@ const updateMyPassword = async (passwordCurrent, password, passwordConfirm) => {
     console.log(err.response.data.message);
   }
 };
+
+// const resetPassword = async (token, password, passwordConfirm) => {
+//   try {
+//     const res = await axios({
+//       method: 'PATCH',
+//       url: 'api/v1/users/resetPassword/:token',
+//       data: {
+//         token,
+//         password,
+//         passwordConfirm,
+//       },
+//     });
+//     if (res.data.status === 'success') {
+//       showAlert('success', 'Password has been reset!');
+//       location.forcedReload(true);
+//     }
+//   } catch (err) {
+//     showAlert('error', err.response.data.message);
+//     console.log(err.response.data.message);
+//   }
+// };
+
+// const bookDeparture = async (departureId) => {
+//   try {
+//     //get checkout session id from API
+//     const session = await axios(
+//       `api/v1/bookings/checkout-session/${departureId}`
+//     );
+//     console.log(session);
+
+//     //create checkout form & charge card
+//     await stripe.redirectToCheckout({
+//       id,
+//     });
+//   } catch (err) {
+//     console.log(err);
+//     showAlert('error', err);
+//   }
+// };
 
 },{"@babel/polyfill":1,"axios":3}]},{},[336]);
