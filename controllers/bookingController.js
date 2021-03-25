@@ -1,6 +1,5 @@
 const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 const catchAsync = require('../utils/catchAsync');
-const AppError = require('../utils/appError');
 const Departure = require('../models/departureModel');
 const factory = require('./handlerFactory');
 const Booking = require('../models/bookingModel');
@@ -19,7 +18,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
           currency: 'usd',
           product_data: {
             name: `${departure.name} departure`,
-            description: departure.summary,
+            description: `To test credit card use 4242 4242 4242 4242\n${departure.summary}`,
           },
           unit_amount: departure.price * 100,
         },
@@ -29,7 +28,7 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
     mode: 'payment',
     success_url: `${req.protocol}://${req.get('host')}/?departure=${
       req.params.departureId
-    }&user=${req.user.id}&${departure.price}`,
+    }&user=${req.user.id}&price=${departure.price}`,
     cancel_url: `${req.protocol}://${req.get('host')}/${departure.slug}`,
   });
   res.status(200).json({
@@ -45,3 +44,9 @@ exports.createBookingCheckout = catchAsync(async (req, res, next) => {
 
   res.redirect(req.originalUrl.split('?')[0]);
 });
+
+exports.createBooking = factory.createOne(Booking);
+exports.getBooking = factory.getOne(Booking);
+exports.getAllBookings = factory.getAll(Booking);
+exports.updateBooking = factory.updateOne(Booking);
+exports.deleteBooking = factory.deleteOne(Booking);
