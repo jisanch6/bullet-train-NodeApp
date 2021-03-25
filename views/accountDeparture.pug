@@ -1,0 +1,35 @@
+extends base
+
+block content
+  section.section-departures
+    h2.heading-secondary My departures
+    .departures__container
+
+      each departure in departures
+        .card
+          .card__header
+            .card__img
+              .card__img-overlay  &nbsp;
+              img.card__img-picture(src=`/img/departures/${departure.imageCover}` alt=`${departure.name}`)
+            h3.heading-tertiary.card__main-heading
+              span= departure.name
+          .card__details
+            h4.card__sub-heading= `Order placed on ${bookings[0].createdAt}`
+            p.card__text= departure.summary
+            .card__data
+              svg.card__icon
+                use(xlink:href='/img/sprite.svg#icon-location')
+              span= departure.startLocation.description
+            .card__data
+              svg.card__icon
+                use(xlink:href='/img/sprite.svg#icon-flag')
+              span= departure.endLocation.description
+          .card__footer
+            p
+              span.card__footer-value= `$${bookings[0].price}`
+              |  
+              span.card__footer-text purchased price
+            p.card__ratings
+              span.card__footer-value= `${departure.ratingsAverage}`
+              |  
+              span.card__footer-text= `rating ${departure.ratingsQuantity}`

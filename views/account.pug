@@ -13,7 +13,7 @@ block content
             nav.user-account__menu 
                 ul.side-nav 
                     +navItem('#', 'Settings', 'settings')
-                    +navItem('#', 'My bookings', 'briefcase')
+                    +navItem('/my-bookings', 'My bookings', 'briefcase')
                     +navItem('#', 'My reviews', 'star-full')
                     +navItem('#', 'Billing', 'credit-card')
 
@@ -32,7 +32,8 @@ block content
             
             .user-account__forms 
                 .user-account__form-box
-                    h2.form__heading Your account information 
+                    h2.form__heading Your account information
+                    h3 Only my booking is implemented and account forms below are also working
 
                     form.form.form--user-data
                         .form__group
