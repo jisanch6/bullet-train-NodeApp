@@ -7,6 +7,7 @@ head
     link(href='https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700&display=swap' rel='stylesheet')
     link(rel='stylesheet' href='/css/style.css')
     link(rel='shortcut icon' type='image/png' href='/img/favicon.png')
+    script(src="https://js.stripe.com/v3/" )
     title Bullet-Train | #{title}
 .container
   include _header
@@ -15,6 +16,6 @@ head
     h1 Placeholder
 
   include _footer  
-  //- script(src='/js/bundle.js')
   script(src='/main.js')
+  
   
