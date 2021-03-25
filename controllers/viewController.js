@@ -1,7 +1,5 @@
-// const jwt = require('jsonwebtoken');
-// const crypto = require('crypto');
 const Departure = require('../models/departureModel');
-// const User = require('../models/userModel');
+const Booking = require('../models/bookingModel');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 
@@ -53,6 +51,21 @@ exports.getAccount = (req, res) =>
   res.status(200).render('account', {
     title: 'Your account',
   });
+
+exports.getMyBookings = catchAsync(async (req, res, next) => {
+  // Find all bookings
+  const bookings = await Booking.find({ user: req.user.id });
+
+  // Find departures with the returned IDs
+  const departureIDs = bookings.map((el) => el.departure);
+  const departures = await Departure.find({ _id: { $in: departureIDs } });
+
+  res.status(200).render('accountDeparture', {
+    title: 'Your bookings',
+    departures,
+    bookings,
+  });
+});
 
 exports.getResetPasswordForm = (req, res) => {
   res.status(200).render('resetPassword', {
