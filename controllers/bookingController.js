@@ -9,8 +9,6 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   const departure = await Departure.findById(req.params.departureId);
   //Create checkout session
   const session = await stripe.checkout.sessions.create({
-    success_url: `${req.protocol}://${req.get('host')}/`,
-    cancel_url: `${req.protocol}://${req.get('host')}/${departure.slug}`,
     payment_method_types: ['card'],
     customer_email: req.user.email,
     client_reference_id: req.params.departureId,
@@ -28,6 +26,8 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
     mode: 'payment',
+    success_url: `${req.protocol}://${req.get('host')}/`,
+    cancel_url: `${req.protocol}://${req.get('host')}/${departure.slug}`,
   });
   res.status(200).json({
     status: 'success',
