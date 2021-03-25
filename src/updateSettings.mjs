@@ -15,7 +15,6 @@ const updateMe = async (data) => {
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
-    console.log(err.response.data.message);
   }
 };
 
@@ -39,7 +38,6 @@ const updateMyPassword = async (passwordCurrent, password, passwordConfirm) => {
     }
   } catch (err) {
     showAlert('error', err.response.data.message);
-    console.log(err.response.data.message);
   }
 };
 
