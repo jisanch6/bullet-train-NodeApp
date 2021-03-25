@@ -15,15 +15,19 @@ const departureRouter = require('./routes/departureRoutes');
 const userRouter = require('./routes/userRoutes');
 const reviewRouter = require('./routes/reviewRoutes');
 const bookingRouter = require('./routes/bookingRoutes');
+const bookingController = require('./controllers/bookingController');
 const viewRouter = require('./routes/viewRoutes');
 
 const app = express();
+
+app.enable('trust proxy');
 
 app.set('view engine', 'pug');
 app.set('views', path.join(__dirname, 'views'));
 
 /////GLOBAL MIDDLEWARE
 app.use(cors());
+app.options('*', cors());
 // Sets special security HTTP headers
 // helps against XSS attacks
 app.use(
@@ -46,6 +50,11 @@ const limiter = rateLimit({
 
 app.use('/api', limiter);
 
+app.post(
+  '/webhook-checkout',
+  express.raw({ type: 'application/json' }),
+  bookingController.webhookCheckout
+);
 // Limiting amount of data passed in the body
 app.use(express.json({ limit: '10kb' }));
 app.use(cookieParser());
