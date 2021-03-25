@@ -53,7 +53,7 @@ module.exports = class Email {
   }
 
   async sendWelcome() {
-    await this.send('Welcome', 'Welcome to the Bullet-Train family! ');
+    await this.send('welcome', 'Welcome to the Bullet-Train family! ');
   }
 
   async sendPasswordReset() {
