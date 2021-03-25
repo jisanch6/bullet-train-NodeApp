@@ -3,6 +3,7 @@ const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
 const Departure = require('../models/departureModel');
 const factory = require('./handlerFactory');
+const Booking = require('../models/bookingModel');
 
 exports.getCheckoutSession = catchAsync(async (req, res, next) => {
   // Get the departure being booked
@@ -26,11 +27,21 @@ exports.getCheckoutSession = catchAsync(async (req, res, next) => {
       },
     ],
     mode: 'payment',
-    success_url: `${req.protocol}://${req.get('host')}/`,
+    success_url: `${req.protocol}://${req.get('host')}/?departure=${
+      req.params.departureId
+    }&user=${req.user.id}&${departure.price}`,
     cancel_url: `${req.protocol}://${req.get('host')}/${departure.slug}`,
   });
   res.status(200).json({
     status: 'success',
     id: session.id,
   });
+});
+
+exports.createBookingCheckout = catchAsync(async (req, res, next) => {
+  const { departure, user, price } = req.query;
+  if (!departure && !user && !price) return next();
+  await Booking.create({ departure, user, price });
+
+  res.redirect(req.originalUrl.split('?')[0]);
 });
